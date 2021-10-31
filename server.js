@@ -1,14 +1,13 @@
 const express = require('express')
 const app = express()
-app.use(express.json())
-
 const bodyParser = require('body-parser')
+const cors = require('cors')
+
+app.use(cors())
+app.use(express.json())
 app.use(bodyParser.json())
 
-const cors = require('cors')
-app.use(cors())
-
-const port = 'https://sniff-api.herokuapp.com'
+// const port = 'https://sniff-api.herokuapp.com'
 
 app.locals.title = 'Sniff'
 
@@ -18,9 +17,6 @@ app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on http://localhost:${app.get('port')}.`);
 })
 
-app.get('/', (request, reponse) => {
-  console.log('working')
-  // response.json({
-  //   test: 'test'
-  // })
+app.get('/', (request, response) => {
+  response.json({test:'test'})
 })
