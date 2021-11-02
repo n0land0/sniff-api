@@ -1,28 +1,30 @@
+// dummy data
 const userData = require('./userData')
+// express & related
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
-
+// knex
+const knex = require('knex')
+const knexfile = require('./knexfile')
+const environment = process.env.NODE_ENV || 'development'
+const configuration = knexfile[environment]
+const database = knex(configuration)
+// middleware
 app.use(cors())
 app.use(express.json())
 app.use(bodyParser.json())
-
-
 const logger = (request, response, next) => {
   console.log(request.get('host'))
   next()
 }
 app.use(logger)
-
+// setup
 app.locals.title = 'Sniff'
-
 app.set('port', process.env.PORT || 3001)
 
-app.listen(app.get('port'), (request, response) => {
-  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
-})
-
+// endpoints
 app.get('/api/v1/users', (request, response) => {
   response.json(userData)
 })
@@ -59,4 +61,9 @@ app.get('/api/v1/playdates/:userId', (request, response) => {
     }
   })
   response.json(playdates)
+})
+
+// listener
+app.listen(app.get('port'), (request, response) => {
+  console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 })
