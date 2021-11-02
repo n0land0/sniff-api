@@ -15,7 +15,7 @@ module.exports = {
     // connection: {
     //   database: 'sniffdb',
     //   user:     'nolancaine',
-    //   password: null,
+    //   password: 'yaydoggies',
     // },
     connection: 'postgres://localhost/sniffdb',
     pool: {
