@@ -7,10 +7,11 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 // knex
 const knex = require('knex')
-const knexfile = require('./knexfile')
+const knexfile = require('./database/knexfile')
 const environment = process.env.NODE_ENV || 'development'
 const configuration = knexfile[environment]
-const database = knex(configuration)
+// const database = knex(configuration)
+const sniffDB = knex(configuration)
 // middleware
 app.use(cors())
 app.use(express.json())
@@ -26,27 +27,49 @@ app.set('port', process.env.PORT || 3001)
 
 // endpoints
 app.get('/api/v1/users', (request, response) => {
-  response.json(userData)
+  // response.json(userData)
+  sniffDB('users').select()
+  .then(users => response.json(users))
 })
 
 app.get('/api/v1/users/:userId', (request, response) => {
-  response.json(userData.find(user => user.id == request.params.userId))
+  // response.json(userData.find(user => user.id == request.params.userId))
+  sniffDB('users').where('id', request.params.userId).select()
+  .then(([user]) => response.json(user))
 })
 
 app.post('/api/v1/playdates', (request, response) => {
-  request.body.forEach(playdate => {
-    userData.forEach(user => {
-      if (user.id === playdate.userId) {
-        const playmate = userData.find(user => user.id === playdate.playmate)
-        playdate.playmate = {
-          ownerName: playmate.ownerName,
-          dogName: playmate.dogName,
+  // request.body.forEach(playdate => {
+  //   userData.forEach(user => {
+  //     if (user.id === playdate.userId) {
+  //       const playmate = userData.find(user => user.id === playdate.playmate)
+  //       playdate.playmate = {
+  //         ownerName: playmate.ownerName,
+  //         dogName: playmate.dogName,
+  //       }
+  //       user.appointments.push(playdate)
+  //     }
+  //   })
+  // })
+  // response.json(userData)
+
+  sniffDB('users').select()
+  .then(users => {
+    request.body.forEach(playdate => {
+      users.forEach(user => {
+        if (user.id === playdate.userId) {
+          const playmate = users.find(user => user.id === playdate.playmate)
+          console.log(playmate)
+          playdate.playmate = {
+            ownerName: playmate.owner_name,
+            dogName: playmate.dog_name,
+          }
+          user.appointments.push(playdate)
         }
-        user.appointments.push(playdate)
-      }
+      })
     })
+    response.json(users)
   })
-  response.json(userData)
 })
 
 app.get('/api/v1/playdates/:userId', (request, response) => {
