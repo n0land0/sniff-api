@@ -1,3 +1,4 @@
+const userData = require('./userData')
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
@@ -13,7 +14,6 @@ const logger = (request, response, next) => {
   next()
 }
 app.use(logger)
-// const port = 'https://sniff-api.herokuapp.com'
 
 app.locals.title = 'Sniff'
 
@@ -23,6 +23,40 @@ app.listen(app.get('port'), (request, response) => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
 })
 
-app.get('/api/v1/', (request, response) => {
-  response.json({test:'test'})
+app.get('/api/v1/users', (request, response) => {
+  response.json(userData)
+})
+
+app.get('/api/v1/users/:userId', (request, response) => {
+  response.json(userData.find(user => user.id == request.params.userId))
+})
+
+app.post('/api/v1/playdates', (request, response) => {
+  request.body.forEach(playdate => {
+    userData.forEach(user => {
+      if (user.id === playdate.userId) {
+        const playmate = userData.find(user => user.id === playdate.playmate)
+        playdate.playmate = {
+          ownerName: playmate.ownerName,
+          dogName: playmate.dogName,
+        }
+        user.appointments.push(playdate)
+      }
+    })
+  })
+  response.json(userData)
+})
+
+app.get('/api/v1/playdates/:userId', (request, response) => {
+  const currentUser = userData.find(user => user.id === +request.params.userId)
+  const playdates = currentUser.appointments.map(appointment => {
+    const otherUserId = appointment.usersInvolved.find(id => +request.params.userId !== id)
+    const otherUser = userData.find(user => otherUserId)
+    return {
+      ownerName: otherUser.ownerName,
+      dogName: otherUser.dogName,
+      ...appointment
+    }
+  })
+  response.json(playdates)
 })
