@@ -26,6 +26,7 @@ app.locals.title = 'Sniff'
 app.set('port', process.env.PORT || 3001)
 
 // endpoints
+  // GET
 app.get('/api/v1/users', (request, response) => {
   // response.json(userData)
   sniffDB('users').select()
@@ -38,6 +39,24 @@ app.get('/api/v1/users/:userId', (request, response) => {
   .then(([user]) => response.json(user))
 })
 
+// app.get('/api/v1/playdates/:userId', (request, response) => {
+//   const currentUser = userData.find(user => user.id === +request.params.userId)
+//   const playdates = currentUser.appointments.map(appointment => {
+//     const otherUserId = appointment.usersInvolved.find(id => +request.params.userId !== id)
+//     const otherUser = userData.find(user => otherUserId)
+//     return {
+//       ownerName: otherUser.ownerName,
+//       dogName: otherUser.dogName,
+//       ...appointment
+//     }
+//   })
+//   response.json(playdates)
+//
+//   sniffDB('users').where('id', request.params.userId).select()
+//   .then(([user]) => )
+// })
+
+  // POST
 app.post('/api/v1/playdates', (request, response) => {
   // request.body.forEach(playdate => {
   //   userData.forEach(user => {
@@ -59,7 +78,6 @@ app.post('/api/v1/playdates', (request, response) => {
       users.forEach(user => {
         if (user.id === playdate.userId) {
           const playmate = users.find(user => user.id === playdate.playmate)
-          console.log(playmate)
           playdate.playmate = {
             ownerName: playmate.owner_name,
             dogName: playmate.dog_name,
@@ -72,19 +90,43 @@ app.post('/api/v1/playdates', (request, response) => {
   })
 })
 
-app.get('/api/v1/playdates/:userId', (request, response) => {
-  const currentUser = userData.find(user => user.id === +request.params.userId)
-  const playdates = currentUser.appointments.map(appointment => {
-    const otherUserId = appointment.usersInvolved.find(id => +request.params.userId !== id)
-    const otherUser = userData.find(user => otherUserId)
-    return {
-      ownerName: otherUser.ownerName,
-      dogName: otherUser.dogName,
-      ...appointment
-    }
+
+
+// dummy
+app.post('/dummy/playdates', (request, response) => {
+  // sniffDB('users')
+  // .where('id', user.id)
+  // .update({ appointments: JSON.stringify(updatedAppts) }, 'appointments')
+  // .then(appts => console.log(appts))
+  sniffDB('users').select()
+  .then(users => {
+    request.body.forEach(playdate => {
+      users.forEach(user => {
+        if (user.id === playdate.userId) {
+          const playmate = users.find(user => user.id === playdate.playmate)
+          playdate.playmate = {
+            id: playmate.id,
+            ownerName: playmate.owner_name,
+            dogName: playmate.dog_name,
+          }
+          // user.appointments.push(playdate)
+        const updatedAppts = [...user.appointments, playdate]
+        sniffDB('users')
+        .where('id', user.id)
+        .update({ appointments: JSON.stringify(updatedAppts) }, 'appointments')
+        .then(appts => console.log(appts))
+        }
+      })
+    })
+    // response.json(users)
   })
-  response.json(playdates)
 })
+
+
+
+
+
+
 
 // listener
 app.listen(app.get('port'), (request, response) => {
