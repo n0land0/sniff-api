@@ -131,5 +131,5 @@ app.post('/dummy/playdates', (request, response) => {
 // listener
 app.listen(app.get('port'), (request, response) => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
-  console.log(knexfile['development'])
+  console.log(process.env.NODE_ENV)
 })
