@@ -54,7 +54,7 @@ app.post('/api/v1/playdates', (request, response) => {
             ownerName: playmate.owner_name,
             dogName: playmate.dog_name,
           }
-          const updatedAppts = [...user.appointments, playdate]
+          const updatedAppts = [...user.appointments, playdate].sort((apptA, apptB) => apptB.date - apptA.date)
           sniffDB('users')
             .where('id', user.id)
             .update({ appointments: JSON.stringify(updatedAppts) }, 'appointments')
