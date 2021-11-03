@@ -28,98 +28,44 @@ app.set('port', process.env.PORT || 3001)
 // endpoints
   // GET
 app.get('/api/v1/users', (request, response) => {
-  // response.json(userData)
   sniffDB('users').select()
   .then(users => response.json(users))
+  .catch(error => response.status(500).send(error.message))
 })
 
 app.get('/api/v1/users/:userId', (request, response) => {
-  // response.json(userData.find(user => user.id == request.params.userId))
   sniffDB('users').where('id', request.params.userId).select()
   .then(([user]) => response.json(user))
+  .catch(error => response.status(500).send(error.message))
 })
-
-// app.get('/api/v1/playdates/:userId', (request, response) => {
-//   const currentUser = userData.find(user => user.id === +request.params.userId)
-//   const playdates = currentUser.appointments.map(appointment => {
-//     const otherUserId = appointment.usersInvolved.find(id => +request.params.userId !== id)
-//     const otherUser = userData.find(user => otherUserId)
-//     return {
-//       ownerName: otherUser.ownerName,
-//       dogName: otherUser.dogName,
-//       ...appointment
-//     }
-//   })
-//   response.json(playdates)
-//
-//   sniffDB('users').where('id', request.params.userId).select()
-//   .then(([user]) => )
-// })
 
   // POST
 app.post('/api/v1/playdates', (request, response) => {
-  // request.body.forEach(playdate => {
-  //   userData.forEach(user => {
-  //     if (user.id === playdate.userId) {
-  //       const playmate = userData.find(user => user.id === playdate.playmate)
-  //       playdate.playmate = {
-  //         ownerName: playmate.ownerName,
-  //         dogName: playmate.dogName,
-  //       }
-  //       user.appointments.push(playdate)
-  //     }
-  //   })
-  // })
-  // response.json(userData)
-
+  let userIdsInvolved = []
   sniffDB('users').select()
   .then(users => {
     request.body.forEach(playdate => {
       users.forEach(user => {
         if (user.id === playdate.userId) {
-          const playmate = users.find(user => user.id === playdate.playmate)
-          playdate.playmate = {
-            ownerName: playmate.owner_name,
-            dogName: playmate.dog_name,
-          }
-          user.appointments.push(playdate)
-        }
-      })
-    })
-    response.json(users)
-  })
-})
-
-
-
-// dummy
-app.post('/dummy/playdates', (request, response) => {
-  // sniffDB('users')
-  // .where('id', user.id)
-  // .update({ appointments: JSON.stringify(updatedAppts) }, 'appointments')
-  // .then(appts => console.log(appts))
-  sniffDB('users').select()
-  .then(users => {
-    request.body.forEach(playdate => {
-      users.forEach(user => {
-        if (user.id === playdate.userId) {
+          userIdsInvolved.push(user.id)
           const playmate = users.find(user => user.id === playdate.playmate)
           playdate.playmate = {
             id: playmate.id,
             ownerName: playmate.owner_name,
             dogName: playmate.dog_name,
           }
-          // user.appointments.push(playdate)
-        const updatedAppts = [...user.appointments, playdate]
-        sniffDB('users')
-        .where('id', user.id)
-        .update({ appointments: JSON.stringify(updatedAppts) }, 'appointments')
-        .then(appts => console.log(appts))
+          const updatedAppts = [...user.appointments, playdate]
+          sniffDB('users')
+            .where('id', user.id)
+            .update({ appointments: JSON.stringify(updatedAppts) }, 'appointments')
+            .then(() => console.log('working'))
+            .catch(error => {throw new Error()})
         }
       })
     })
-    // response.json(users)
   })
+  .then(() => response.status(201).send(`Playdate added for users ${userIdsInvolved[0]} and ${userIdsInvolved[1]}.`))
+  .catch(error => response.status(500).send(error.message))
 })
 
 
@@ -131,5 +77,5 @@ app.post('/dummy/playdates', (request, response) => {
 // listener
 app.listen(app.get('port'), (request, response) => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
-  console.log(sniffDB)
+  console.log(process.env.DATABASE_URL)
 })
