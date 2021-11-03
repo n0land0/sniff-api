@@ -64,8 +64,8 @@ app.post('/api/v1/playdates', (request, response) => {
       })
     })
   })
-  .then(() => response.status(201).send(`Playdate added for users ${userIdsInvolved[0]} and ${userIdsInvolved[1]}.`))
-  .catch(error => response.status(500).send(error.message))
+  .then(() => response.status(201).json(`Playdate added for users ${userIdsInvolved[0]} and ${userIdsInvolved[1]}.`))
+  .catch(error => response.status(500).json(error.message))
 })
 
 
