@@ -21,16 +21,26 @@ const userData = [
     bio: lorem,
     appointments: [
       {
-        date: '2021-11-02',
-        id: 1635662137907,
-        location: 'Cherry Creek Dog Park',
-        usersInvolved: [2, 3]
+          "id": 1635920058018,
+          "userId": 2,
+          "playmate": {
+              "id": 1,
+              "ownerName": "Nolan",
+              "dogName": "Biscuit"
+          },
+          "date": "2021-11-24",
+          "location": "Greenway Dog Park"
       },
       {
-        date: '2021-09-29',
-        id: 1635662144859,
-        location: 'Greenway Dog Park',
-        usersInvolved: [2, 5]
+        "id": 1635920119866,
+        "userId": 2,
+        "playmate": {
+            "id": 4,
+            "ownerName": "Robbie",
+            "dogName": "Chunk"
+        },
+        "date": "2021-11-18",
+        "location": "Cherry Creek Dog Park"
       }
     ]
   },
