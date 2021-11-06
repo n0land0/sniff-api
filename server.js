@@ -70,12 +70,12 @@ app.get('/api/v1/users/:userId', (request, response) => {
 
 app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
-  knex('appointments').insert({
+  sniffDB.insert({
       id: +playdate.id,
       owner_ids: playdate.owner_ids,
       location: playdate.location,
       date: playdate.date,
-    })
+    }).into('appointments')
   .then(() => {
     response.json(`id: ${playdate.id}, owner_ids: ${playdate.owner_ids}, location: ${playdate.location}, date: ${playdate.date}`)
   })
