@@ -70,7 +70,7 @@ app.post('/api/v1/playdates', (request, response) => {
 
 
 app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
-  sniffDB('users')
+  sniffDB('users').select()
     .then(users => {
       users.forEach(user => {
        user.appointments.forEach(appointment => {
