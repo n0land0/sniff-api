@@ -1,12 +1,10 @@
 exports.up = function(knex) {
   return knex.schema
     .table('appointments', (table) => {
-      table.integer('id').primary();
       table.string('owner_ids');
       table.string('location')
       table.string('date')
-
-      table.timestamps(true, true);
+      table.dropColumn('owner_name')
     })
 };
 
