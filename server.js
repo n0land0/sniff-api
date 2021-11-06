@@ -69,7 +69,10 @@ app.post('/api/v1/playdates', (request, response) => {
 })
 
 
-
+app.delete('/api/v1/appointments/:userIds', (request, response) => {
+  const userIds = request.params.userIds.split('-')
+  console.log(userIds)
+})
 
 
 
