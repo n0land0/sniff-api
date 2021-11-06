@@ -6,12 +6,12 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 // knex
-const knex = require('knex')
+// const knex = require('knex')
 const knexfile = require('./database/knexfile')
 const environment = process.env.NODE_ENV || 'development'
 const configuration = knexfile[environment]
 // const database = knex(configuration)
-const sniffDB = knex(configuration)
+// const sniffDB = knex(configuration)
 // middleware
 app.use(cors())
 app.use(express.json())
@@ -70,12 +70,12 @@ app.get('/api/v1/users/:userId', (request, response) => {
 
 app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
-  sniffDB.insert({
+  knex('appointments').insert({
       id: +playdate.id,
       owner_ids: playdate.owner_ids,
       location: playdate.location,
       date: playdate.date,
-    }).into('appointments')
+    })
   .then(() => {
     response.json(`id: ${playdate.id}, owner_ids: ${playdate.owner_ids}, location: ${playdate.location}, date: ${playdate.date}`)
   })
