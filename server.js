@@ -70,7 +70,7 @@ app.get('/api/v1/users/:userId', (request, response) => {
 
 app.post('/api/v1/appointments', (request, response) => {
   const {id, owner_ids, location, date} = request.body
-  sniffDB('appointments')
+  sniffDB('appointments').select()
     .insert({
       id: id,
       owner_ids: owner_ids,
