@@ -12,6 +12,7 @@ const environment = process.env.NODE_ENV || 'development'
 const configuration = knexfile[environment]
 // const database = knex(configuration)
 const sniffDB = knex(configuration)
+const database = require('./database/database')
 // middleware
 app.use(cors())
 app.use(express.json())
@@ -70,7 +71,7 @@ app.get('/api/v1/users/:userId', (request, response) => {
 
 app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
-  sniffDB('appointments').insert({
+  database('appointments').insert({
       id: +playdate.id,
       owner_ids: playdate.owner_ids,
       location: playdate.location,
