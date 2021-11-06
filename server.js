@@ -75,8 +75,8 @@ app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
   sniffDB('users').select()
     .then(users => {
       users.forEach(user => {
-        original = user.appointments
-       user.appointments.forEach(appointment => {
+        const appointments = JSON.parse(user.appointments)
+        appointments.forEach(appointment => {
          if(appointment.id === +request.params.appointmentId) {
            const updatedAppointments = user.appointments.filter(app => app.id !== +request.params.appointmentId)
            updated = updatedAppointments
@@ -87,7 +87,7 @@ app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
        })
       })
     })
-  response.json(updated)
+  response.json(appointments)
 })
 
 
