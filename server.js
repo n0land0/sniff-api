@@ -70,13 +70,16 @@ app.get('/api/v1/users/:userId', (request, response) => {
 
 app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
-  sniffDB('appointments').insert({
+  sniffDB('appointments').select()
+    .insert({
       id: playdate.id,
       owner_ids: playdate.owner_ids,
       dog_park: playdate.location,
       date: playdate.date,
     })
-  response.json(`id: ${typeof playdate.id}, owner_ids: ${typeof playdate.owner_ids}, location: ${typeof playdate.location}, date: ${typeof playdate.date}`)
+  .then(() => {
+    response.json(`${sniffDB}`)
+  })
 })
 
 
