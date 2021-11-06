@@ -80,7 +80,7 @@ app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
          if(appointment.id === +request.params.appointmentId) {
            const updatedAppointments = user.appointments.filter(app => app.id !== +request.params.appointmentId)
            updated = updatedAppointments
-           sniffDB('users')
+           sniffDB('users').select()
             .where('id', user.id)
             .update({ appointments: JSON.stringify(updatedAppointments) })
          }
