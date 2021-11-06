@@ -2,9 +2,10 @@
 exports.up = function(knex) {
   return knex.schema
     .createTable('appointments', (table) => {
-      // table.increments('id').primary();
       table.integer('id').primary();
-      table.string('owner_name');
+      table.string('owner_ids');
+      table.string('location')
+      table.string('date')
 
       table.timestamps(true, true);
     })
