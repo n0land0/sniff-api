@@ -77,9 +77,7 @@ app.post('/api/v1/appointments', (request, response) => {
       dog_park: playdate.location,
       date: playdate.date,
     })
-  .then(() => {
     response.json(`${sniffDB}`)
-  })
 })
 
 
