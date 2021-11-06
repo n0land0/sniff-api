@@ -72,7 +72,7 @@ app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
   sniffDB('appointments')
     .insert({
-      id: playdate.id,
+      id: +playdate.id,
       owner_ids: playdate.owner_ids,
       location: playdate.location,
       date: playdate.date,
