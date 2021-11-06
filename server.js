@@ -28,13 +28,13 @@ app.set('port', process.env.PORT || 3001)
 // endpoints
   // GET
 app.get('/api/v1/users', (request, response) => {
-  sniffDB('users').select()
+  knex('users').select()
   .then(users => response.json(users))
   .catch(error => response.status(500).send(error.message))
 })
 
 app.get('/api/v1/users/:userId', (request, response) => {
-  sniffDB('users').where('id', request.params.userId).select()
+  knex('users').where('id', request.params.userId).select()
   .then(([user]) => response.json(user))
   .catch(error => response.status(500).send(error.message))
 })
