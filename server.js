@@ -68,18 +68,16 @@ app.get('/api/v1/users/:userId', (request, response) => {
 //   .catch(error => response.status(500).json(error.message))
 // })
 
-app.post('/api/v1/appointments', (request, response) => {
+app.post('/api/v1/appointments', async (request, response) => {
   const playdate = request.body
-  sniffDB('appointments')
+  await sniffDB('appointments')
     .insert({
       id: +playdate.id,
       owner_ids: playdate.owner_ids,
       location: playdate.location,
       date: playdate.date,
     })
-    .then(() => {
-      response.json(`id: ${playdate.id}, owner_ids: ${playdate.owner_ids}, location: ${playdate.location}, date: ${playdate.date}`)
-    })
+    response.json(`id: ${playdate.id}, owner_ids: ${playdate.owner_ids}, location: ${playdate.location}, date: ${playdate.date}`)
 })
 
 
