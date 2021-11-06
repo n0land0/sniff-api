@@ -1,6 +1,6 @@
 exports.up = function(knex) {
   return knex.schema
-    .createTable('appointments', (table) => {
+    .table('appointments', (table) => {
       table.integer('id').primary();
       table.string('owner_ids');
       table.string('location')
