@@ -83,6 +83,7 @@ app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
        })
       })
     })
+  response.json('working')
 })
 
 
