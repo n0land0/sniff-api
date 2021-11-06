@@ -69,10 +69,20 @@ app.post('/api/v1/playdates', (request, response) => {
 })
 
 
-app.delete('/api/v1/appointments/:userIds', (request, response) => {
-  const userIds = request.params.userIds.split('-')
-  console.log(userIds)
-  response.json(userIds)
+app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
+  sniffDB('users')
+    .then(users => {
+      users.forEach(user => {
+       user.appointments.forEach(appointment => {
+         if(appointment.id === +request.params.appointmentId) {
+           const updatedAppointments = user.appointments.filter(app => app.id !== +request.params.appointmentId)
+           sniffDB('users')
+            .where('id', user.id)
+            .update({ appointments: JSON.stringify(updatedAppointments) })
+         }
+       })
+      })
+    })
 })
 
 
