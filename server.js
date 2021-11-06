@@ -70,16 +70,14 @@ app.post('/api/v1/playdates', (request, response) => {
 
 
 app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
-  let original;
-  let updated;
+  let appointments
   sniffDB('users').select()
     .then(users => {
       users.forEach(user => {
-        const appointments = JSON.parse(user.appointments)
+        appointments = JSON.parse(user.appointments)
         appointments.forEach(appointment => {
          if(appointment.id === +request.params.appointmentId) {
            const updatedAppointments = user.appointments.filter(app => app.id !== +request.params.appointmentId)
-           updated = updatedAppointments
            sniffDB('users').select()
             .where('id', user.id)
             .update({ appointments: JSON.stringify(updatedAppointments) })
