@@ -77,7 +77,9 @@ app.post('/api/v1/appointments', (request, response) => {
       location: playdate.location,
       date: playdate.date,
     })
-  response.json(`id: ${playdate.id}, owner_ids: ${playdate.owner_ids}, location: ${playdate.location}, date: ${playdate.date}`)
+    .then(() => {
+      response.json(`id: ${playdate.id}, owner_ids: ${playdate.owner_ids}, location: ${playdate.location}, date: ${playdate.date}`)
+    })
 })
 
 
