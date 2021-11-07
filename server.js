@@ -71,7 +71,7 @@ app.get('/api/v1/users/:userId', (request, response) => {
 app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
   sniffDB('appointments')
-    .insert({...playdate})
+    .insert([{...playdate}])
     .then(() => {
       response.json('hello')
     })
