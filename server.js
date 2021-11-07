@@ -81,28 +81,6 @@ app.post('/api/v1/appointments', (request, response) => {
     })
 })
 
-app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
-  let appointments
-  sniffDB('users').select()
-    .then(users => {
-      users.forEach(user => {
-        appointments = JSON.parse(user.appointments)
-        appointments.forEach(appointment => {
-         if(appointment.id === +request.params.appointmentId) {
-           const updatedAppointments = user.appointments.filter(app => app.id !== +request.params.appointmentId)
-           sniffDB('users').select()
-            .where('id', user.id)
-            .update({ appointments: JSON.stringify(updatedAppointments) })
-         }
-       })
-      })
-    })
-  response.json(appointments)
-})
-
-
-
-
 // listener
 app.listen(app.get('port'), (request, response) => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
