@@ -42,8 +42,19 @@ app.get('/api/v1/users/:userId', (request, response) => {
 app.get('/api/v1/appointments/:userId', (request, response) => {
   sniffDB('appointments').select()
   .then(appointments => {
-    const usersAppointments = appointments.filter(appointment => appointment.owners.includes(+request.params.userId))
-    response.json(usersAppointments)
+    const userId = +request.params.userId
+    const usersAppointments = appointments.filter(appointment => appointment.owners.includes(userId))
+    const updatedAppointments = usersAppointments.map(appointment => {
+      const playmateId = appointment.owners.find(id => id !== userId)
+      const playmate = sniffDB('users').select().where("id", playmateId)
+      return {
+        id: appointment.id,
+        date: appointment.date,
+        dogPark: appointment.dog_park,
+        playmate: playmate,
+      }
+    })
+    response.json(updatedAppointments)
   })
   .catch(error => response.status(500).send(error.message))
 })
