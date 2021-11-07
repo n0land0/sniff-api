@@ -42,9 +42,8 @@ app.get('/api/v1/users/:userId', (request, response) => {
 app.get('/api/v1/appointments/:userId', (request, response) => {
   sniffDB('appointments').select()
   .then(appointments => {
-    const userId = +request.params.userId
-    const usersAppointments = appointments.filter(appointment => appointment.owners.includes(userId))
-    return response.json(userAppointments)
+    const usersAppointments = appointments.filter(appointment => appointment.owners.includes(+request.params.userId))
+    response.json(usersAppointments)
   })
   .catch(error => response.status(500).send(error.message))
 })
@@ -64,7 +63,7 @@ app.post('/api/v1/appointments', (request, response) => {
 
 app.delete('/api/v1/appointments/:apptId', (request, response) => {
   sniffDB('appointments').select()
-    .where('id', request.params.apptId)
+    .where('id', +request.params.apptId)
     .del()
     .then(() => {
       response.json('Appointment deleted')
