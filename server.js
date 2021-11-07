@@ -76,9 +76,10 @@ app.post('/api/v1/appointments', (request, response) => {
       owner_ids: playdate.owner_ids,
       dog_park: playdate.location,
       date: playdate.date,
+    }, 'id')
+    .then((id) => {
+      response.json(id)
     })
-    .onConflict('id', 'owner_ids', 'dog_park', 'date')
-    .ignore()
 })
 
 // app.post('/api/v1/userpost', (request, response) => {
