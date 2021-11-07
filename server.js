@@ -44,7 +44,7 @@ app.get('/api/v1/appointments/:userId', async (request, response) => {
   .then(appointments => {
     const userId = +request.params.userId
     const usersAppointments = appointments.filter(appointment => appointment.owners.includes(userId))
-    const updatedAppointments = usersAppointments.map(appointment => {
+    const updatedAppointments = await usersAppointments.map(async appointment => {
       const playmateId = appointment.owners.find(id => id !== userId)
       const playmate = await getPlaymate(playmateId)
       return {
