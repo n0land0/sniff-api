@@ -44,9 +44,9 @@ app.get('/api/v1/appointments/:userId', (request, response) => {
   .then(appointments => {
     const userId = +request.params.userId
     const usersAppointments = appointments.filter(appointment => appointment.owners.includes(userId))
-    const updatedAppointments = usersAppointments.map(appointment => {
+    const updatedAppointments = usersAppointments.map(async appointment => {
       const playmateId = appointment.owners.find(id => id !== userId)
-      const playmate = sniffDB('users').select().where("id", playmateId)
+      const playmate = await sniffDB('users').select().where("id", playmateId)
       return {
         id: appointment.id,
         date: appointment.date,
@@ -54,8 +54,10 @@ app.get('/api/v1/appointments/:userId', (request, response) => {
         playmate: playmate,
       }
     })
-    response.json(updatedAppointments)
+    return updatedAppointments
   })
+  .then((data) => response.json(data)
+)
   .catch(error => response.status(500).send(error.message))
 })
 
