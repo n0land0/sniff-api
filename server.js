@@ -71,14 +71,9 @@ app.get('/api/v1/users/:userId', (request, response) => {
 app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
   sniffDB('appointments')
-    .insert({
-      id: playdate.id,
-      owner_ids: `${playdate.owner_ids}`,
-      dog_park: `${playdate.location}`,
-      date: `${playdate.date}`,
-    })
+    .insert(playdate)
     .onConflict('id', 'owner_ids', 'dog_park', 'date')
-    .ignore
+    .ignore()
 })
 
 // app.post('/api/v1/userpost', (request, response) => {
