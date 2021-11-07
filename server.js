@@ -77,6 +77,8 @@ app.post('/api/v1/appointments', (request, response) => {
       dog_park: `${playdate.location}`,
       date: `${playdate.date}`,
     })
+    .onConflict('id', 'owner_ids', 'dog_park', 'date')
+    .ignore
 })
 
 // app.post('/api/v1/userpost', (request, response) => {
