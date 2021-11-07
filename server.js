@@ -72,7 +72,7 @@ app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
   sniffDB('appointments')
     .insert({
-      id: playdate.id,
+      apptId: playdate.id,
       owner_ids: playdate.ownerIds,
       dog_park: playdate.dogPark,
       date: playdate.date,
@@ -81,19 +81,6 @@ app.post('/api/v1/appointments', (request, response) => {
       response.json('Appointment posted!')
     })
 })
-
-// app.post('/api/v1/userpost', (request, response) => {
-//   const playdate = request.body
-//   sniffDB('appointments')
-//     .insert({
-//       id: playdate.id,
-//       owner_ids: playdate.owner_ids,
-//       dog_park: playdate.location,
-//       date: playdate.date,
-//     })
-//     response.json(`${sniffDB}`)
-// })
-
 
 app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
   let appointments
