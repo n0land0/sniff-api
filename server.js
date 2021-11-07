@@ -73,9 +73,9 @@ app.post('/api/v1/appointments', (request, response) => {
   sniffDB('appointments')
     .insert({
       id: playdate.id,
-      owner_ids: JSON.stringify(playdate.owner_ids),
-      dog_park: JSON.stringify(playdate.location),
-      date: JSON.stringify(playdate.date),
+      owner_ids: `${playdate.owner_ids}`,
+      dog_park: `${playdate.location}`,
+      date: `${playdate.date}`,
     })
 })
 
