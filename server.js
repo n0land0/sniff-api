@@ -75,29 +75,20 @@ app.post('/api/v1/appointments', (request, response) => {
       owners: playdate.ownerIds,
       dog_park: playdate.dogPark,
       date: playdate.date,
-    }, 'id')
+    })
     .then(() => {
       response.json('Appointment posted!')
     })
 })
 
 app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
-  let appointments
-  sniffDB('users').select()
-    .then(users => {
-      users.forEach(user => {
-        appointments = JSON.parse(user.appointments)
-        appointments.forEach(appointment => {
-         if(appointment.id === +request.params.appointmentId) {
-           const updatedAppointments = user.appointments.filter(app => app.id !== +request.params.appointmentId)
-           sniffDB('users').select()
-            .where('id', user.id)
-            .update({ appointments: JSON.stringify(updatedAppointments) })
-         }
-       })
-      })
+  sniffDB('appointments').select()
+    .where('id', request.params.appointmentId)
+    .del()
+    .returning(*)
+    .then(appointment => {
+      response.json('Your appointment has been deleted')
     })
-  response.json(appointments)
 })
 
 
