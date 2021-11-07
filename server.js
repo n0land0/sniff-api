@@ -39,31 +39,15 @@ app.get('/api/v1/users/:userId', (request, response) => {
   .catch(error => response.status(500).send(error.message))
 })
 
-app.get('/api/v1/appointments/:userId', async (request, response) => {
+app.get('/api/v1/appointments/:userId', (request, response) => {
   sniffDB('appointments').select()
   .then(appointments => {
     const userId = +request.params.userId
     const usersAppointments = appointments.filter(appointment => appointment.owners.includes(userId))
-    const updatedAppointments = await usersAppointments.map(async appointment => {
-      const playmateId = appointment.owners.find(id => id !== userId)
-      const playmate = await getPlaymate(playmateId)
-      return {
-        id: appointment.id,
-        date: appointment.date,
-        dogPark: appointment.dog_park,
-        playmate: playmate,
-      }
-    })
-    return updatedAppointments
+    return response.json(userAppointments)
   })
-  .then((data) => response.json(data)
-)
   .catch(error => response.status(500).send(error.message))
 })
-
-const getPlaymate = (id) => {
-  return sniffDB('users').select().where("id", playmateId)
-}
 
 app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
