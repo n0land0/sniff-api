@@ -35,38 +35,9 @@ app.get('/api/v1/users', (request, response) => {
 
 app.get('/api/v1/users/:userId', (request, response) => {
   sniffDB('users').where('id', request.params.userId).select()
-  .then(([user]) => response.json(user))
+  .then((user) => response.json(user))
   .catch(error => response.status(500).send(error.message))
 })
-
-  // POST
-// app.post('/api/v1/playdates', (request, response) => {
-//   let userIdsInvolved = []
-//   sniffDB('users').select()
-//   .then(users => {
-//     request.body.forEach(playdate => {
-//       users.forEach(user => {
-//         if (user.id === playdate.userId) {
-//           userIdsInvolved.push(user.id)
-//           const playmate = users.find(user => user.id === playdate.playmate)
-//           playdate.playmate = {
-//             id: playmate.id,
-//             ownerName: playmate.owner_name,
-//             dogName: playmate.dog_name,
-//           }
-//           const updatedAppts = [...user.appointments, playdate].sort((apptA, apptB) => new Date(apptB.date) - new Date(apptA.date))
-//           sniffDB('users')
-//             .where('id', user.id)
-//             .update({ appointments: JSON.stringify(updatedAppts) }, 'appointments')
-//             .then(() => console.log('working'))
-//             .catch(error => {throw new Error()})
-//         }
-//       })
-//     })
-//   })
-//   .then(() => response.status(201).json(`Playdate added for users ${userIdsInvolved[0]} and ${userIdsInvolved[1]}.`))
-//   .catch(error => response.status(500).json(error.message))
-// })
 
 app.post('/api/v1/appointments', (request, response) => {
   const appointment = request.body
@@ -92,7 +63,6 @@ app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
       response.json(`Appointment ${appointment.id} with user${owners[0]} and user${owners[1]}`)
     })
 })
-
 
 
 // listener
