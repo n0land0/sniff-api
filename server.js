@@ -41,10 +41,10 @@ app.get('/api/v1/users/:userId', (request, response) => {
 
 app.get('/api/v1/appointments/:userId', (request, response) => {
   sniffDB('appointments').select()
-  .then(appointments => {
+  .then(async appointments => {
     const userId = +request.params.userId
     const usersAppointments = appointments.filter(appointment => appointment.owners.includes(userId))
-    const updatedAppointments = usersAppointments.map(async appointment => {
+    const updatedAppointments = await usersAppointments.map(async appointment => {
       const playmateId = appointment.owners.find(id => id !== userId)
       const playmate = await sniffDB('users').select().where("id", playmateId)
       return {
