@@ -43,7 +43,7 @@ app.get('/api/v1/appointments/:userId', (request, response) => {
   sniffDB('appointments').select()
   .then(appointments => {
     const usersAppointments = appointments.filter(appointment => appointment.owners.includes(request.params.userId))
-    response.json(appointments)
+    response.json(usersAppointments)
   })
   .catch(error => response.status(500).send(error.message))
 })
