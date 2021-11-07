@@ -39,18 +39,18 @@ app.get('/api/v1/users/:userId', (request, response) => {
   .catch(error => response.status(500).send(error.message))
 })
 
-// app.post('/api/v1/appointments', (request, response) => {
-//   const appointment = request.body
-//   sniffDB('appointments')
-//     .insert({
-//       owners: appointment.ownerIds,
-//       dog_park: appointment.dogPark,
-//       date: appointment.date,
-//     })
-//     .then(() => {
-//       response.json('Appointment posted!')
-//     })
-// })
+app.post('/api/v1/appointments', (request, response) => {
+  const appointment = request.body
+  sniffDB('appointments')
+    .insert({
+      owners: appointment.ownerIds,
+      dog_park: appointment.dogPark,
+      date: appointment.date,
+    })
+    .then(() => {
+      response.json('Appointment posted!')
+    })
+})
 //
 // app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
 //   const { appointmentId } = request.params
