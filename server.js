@@ -69,13 +69,13 @@ app.get('/api/v1/users/:userId', (request, response) => {
 // })
 
 app.post('/api/v1/appointments', (request, response) => {
-  const {ownerIds, dogPark, date} = request.body
+  const appointment = request.body
   sniffDB('appointments')
     .insert({
-      owners: ownerIds,
-      dog_park: dogPark,
-      date: date,
-    }, 'id')
+      owners: appointment.ownerIds,
+      dog_park: appointment.dogPark,
+      date: appointment.date,
+    })
     .then(() => {
       response.json('Appointment posted!')
     })
@@ -85,14 +85,13 @@ app.delete('/api/v1/appointments/:appointmentId', (request, response) => {
   const { appointmentId } = request.params
   sniffDB('appointments').select()
     .where('id', appointmentId)
+    .del()
+    .returning(*)
     .then((appointment) => {
       const owners = appointment.owners
       response.json(`Appointment ${appointment.id} with user${owners[0]} and user${owners[1]}`)
-      return .del()
     })
-
 })
-
 
 
 
