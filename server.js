@@ -81,6 +81,15 @@ app.post('/api/v1/appointments', (request, response) => {
     })
 })
 
+app.delete('/api/v1/appointments/:apptId', (request, response) => {
+  sniffDB('appointments').select()
+    .where('id', request.params.apptId)
+    .del()
+    .then(() => {
+      response.json('Appointment deleted')
+    })
+})
+
 // listener
 app.listen(app.get('port'), (request, response) => {
   console.log(`${app.locals.title} is running on ${app.get('port')}.`);
