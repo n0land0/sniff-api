@@ -1,5 +1,5 @@
 // dummy data
-const userData = require('./userData')
+// const userData = require('./userData')
 // express & related
 const express = require('express')
 const app = express()
