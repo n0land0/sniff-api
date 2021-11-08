@@ -5,10 +5,10 @@ const lorem = 'lol hey im a dog'
 const userData = [
   {
     id: 1,
-    owner_name: 'Nolan',
+    owner_name: 'Adan',
     dog_name:  'Biscuit',
-    profile_pic: 'https://i.imgur.com/i4UwYMu.jpeg',
-    dog_breed: 'Shepherd',
+    profile_pic: 'https://bloximages.chicago2.vip.townnews.com/lacrossetribune.com/content/tncms/assets/v3/editorial/a/22/a226927b-59f9-5c70-ae03-37dc6f0415a6/5802ae6aba39c.image.jpg?resize=1200%2C800',
+    dog_breed: 'Terrier',
     bio: lorem,
     appointments: []
   },
@@ -47,7 +47,7 @@ const userData = [
           "userId": 2,
           "playmate": {
               "id": 1,
-              "ownerName": "Nolan",
+              "ownerName": "",
               "dogName": "Biscuit"
           },
           "date": "2021-11-2",
@@ -91,7 +91,7 @@ const userData = [
           "userId": 2,
           "playmate": {
               "id": 1,
-              "ownerName": "Nolan",
+              "ownerName": "Adan",
               "dogName": "Biscuit"
           },
           "date": "2021-08-24",
@@ -157,7 +157,7 @@ const userData = [
           "userId": 2,
           "playmate": {
               "id": 1,
-              "ownerName": "Nolan",
+              "ownerName": "Adan",
               "dogName": "Biscuit"
           },
           "date": "2021-05-24",
@@ -202,25 +202,25 @@ const userData = [
     id: 3,
     owner_name: 'Paul',
     dog_name: 'Twinky',
-    profile_pic: 'https://i.imgur.com/ZMPYHsk.jpeg',
-    dog_breed: 'Pit Bull',
+    profile_pic: 'https://img.freepik.com/free-photo/young-indian-man-with-pekingese-dog-using-computer-vet-consultation-white-background_250865-213.jpg?size=626&ext=jpg',
+    dog_breed: 'Pekingese',
     bio: lorem,
     appointments: []
   },
   {
     id: 4,
-    owner_name: 'Robbie',
-    dog_name: 'Chunk',
-    profile_pic: 'https://i.imgur.com/tIqs5vu.jpeg',
-    dog_breed: 'Wiener',
+    owner_name: 'Charlize',
+    dog_name: 'Terry',
+    profile_pic: 'https://akns-images.eonline.com/eol_images/Entire_Site/2014110/rs_1024x844-140210122823-1024.freddy-great-dane-021014.jpg?fit=around%7C1024:844&output-quality=90&crop=1024:844;center,top',
+    dog_breed: 'Great Dane',
     bio: lorem,
     appointments: []
   },
   {
     id: 5,
     owner_name: 'Kayla',
-    dog_name: 'Kevin',
-    profile_pic: 'https://i.imgur.com/ZKGFJbC.jpeg',
+    dog_name: 'Urshila',
+    profile_pic: 'https://www.treehugger.com/thmb/We4TbRk6iYC7S7CSE6WoHPSOM2o=/648x364/smart/filters:no_upscale()/__opt__aboutcom__coeus__resources__content_migration__mnn__images__2017__10__noah_chubby_corgi-84acd4f541764777943de71f7ae1ffbb.PNG',
     dog_breed: 'Corgi',
     bio: lorem,
     appointments: []
