@@ -43,10 +43,27 @@ app.get('/api/v1/appointments/:userId', (request, response) => {
   sniffDB('appointments').select()
   .then(appointments => {
     const usersAppointments = appointments.filter(appointment => appointment.owners.includes(+request.params.userId))
-    response.json(usersAppointments)
+    return detailedAppointments(usersAppointments, +request.params.userId)
   })
+  .then(appts => response.json(appts))
   .catch(error => response.status(500).send(error.message))
 })
+
+const detailedAppointments = (appointments, currentUserId) => {
+  const usersId = appointments[0].owners.find(id => id !== currentUserId)
+  return sniffDB('users').select()
+    .then(users => {
+      const updatedAppointments = appointments.map(appointment => {
+        const otherUser = users.find(user => user.id === usersId)
+        return {
+          ...appointments,
+          ownerName: otherUser.ownerName,
+          dogName: otherUser.dogName
+        }
+      })
+      return updatedAppointments
+    })
+}
 
 app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
