@@ -56,10 +56,11 @@ const detailedAppointments = (appointments, currentUserId) => {
       const updatedAppointments = appointments.map(appointment => {
         const otherUser = users.find(user => user.id === usersId)
         return {
-          appointment: appointment,
+          ...appointment,
           ownersId: otherUser.id,
-          ownerName: otherUser.ownerName,
-          dogName: otherUser.dogName
+          ownerName: otherUser.owner_name,
+          dogName: otherUser.dog_name,
+          profilePic: otherUsers.profile_pic
         }
       })
       return updatedAppointments
