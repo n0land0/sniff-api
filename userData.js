@@ -292,8 +292,8 @@ const userData = [
     id: 13,
     owner_name: 'Ravi',
     dog_name: 'Obi-Wan',
-    profile_pic: 'https://www.thehindu.com/life-and-style/b1rocx/article31710009.ece/alternates/FREE_435/01mpstuart1',
-    dog_breed: 'Terrier',
+    profile_pic: 'https://i.guim.co.uk/img/static/sys-images/Guardian/About/General/2010/8/6/1281105209976/Sarfraz-Manzoor-and-Cooki-006.jpg?width=300&quality=45&auto=format&fit=max&dpr=2&s=ce8ede96650765746b61045d54aa8922',
+    dog_breed: 'Bulldog',
     bio: lorem,
     appointments: []
   },
