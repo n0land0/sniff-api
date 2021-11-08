@@ -60,7 +60,7 @@ const detailedAppointments = (appointments, currentUserId) => {
           ownersId: otherUser.id,
           ownerName: otherUser.owner_name,
           dogName: otherUser.dog_name,
-          profilePic: otherUsers.profile_pic
+          profilePic: otherUser.profile_pic
         }
       })
       return updatedAppointments
