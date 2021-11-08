@@ -113,4 +113,4 @@ const parksData = [
   },
 ]
 
-export default parksData
+module.exports = parksData
