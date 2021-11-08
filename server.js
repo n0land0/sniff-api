@@ -69,6 +69,13 @@ const detailedAppointments = (appointments, currentUserId) => {
     })
 }
 
+app.get('/api/v1/parks', (request, response) => {
+  return sniffDB('parks').select()
+    .then(parks => response.json(parks))
+    .catch(error => response.status(500).send(error.message))
+})
+
+  // post
 app.post('/api/v1/appointments', (request, response) => {
   const playdate = request.body
   sniffDB('appointments')
@@ -82,6 +89,7 @@ app.post('/api/v1/appointments', (request, response) => {
     })
 })
 
+  // delete
 app.delete('/api/v1/appointments/:apptId', (request, response) => {
   sniffDB('appointments').select()
     .where('id', +request.params.apptId)
