@@ -56,7 +56,9 @@ const detailedAppointments = (appointments, currentUserId) => {
       const updatedAppointments = appointments.map(appointment => {
         const otherUser = users.find(user => user.id === usersId)
         return {
-          ...appointment,
+          id: appointment.id,
+          dogPark: appointment.dog_park,
+          date: appointment.date,
           ownersId: otherUser.id,
           ownerName: otherUser.owner_name,
           dogName: otherUser.dog_name,
