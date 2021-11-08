@@ -50,10 +50,10 @@ app.get('/api/v1/appointments/:userId', (request, response) => {
 })
 
 const detailedAppointments = (appointments, currentUserId) => {
-  const usersId = appointments[0].owners.find(id => id !== currentUserId)
   return sniffDB('users').select()
     .then(users => {
       const updatedAppointments = appointments.map(appointment => {
+        const usersId = appointment.owners.find(id => id !== currentUserId)
         const otherUser = users.find(user => user.id === usersId)
         return {
           id: appointment.id,
