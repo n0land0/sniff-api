@@ -1,4 +1,4 @@
-const appointmentsData = require('../../appointmentsData.js')
+const appointmentsData = require('../../data/appointmentsData.js')
 
 exports.seed = function(knex) {
   return knex('appointments').del()

@@ -1,4 +1,4 @@
-const userData = require('../../userData.js')
+const userData = require('../../data/userData.js')
 
 const modifiedUserData = userData.map(userObj => {
   return {
